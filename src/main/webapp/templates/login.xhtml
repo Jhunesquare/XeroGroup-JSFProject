@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    <section class="vh-100" style="background-color: #9A616D;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-xl-10">
+                    <div class="card" style="border-radius: 1rem;">
+                        <div class="row g-0">
+                            <div class="col-md-6 col-lg-5 d-none d-md-block">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                                     alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                            </div>
+                            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                                <div class="card-body p-4 p-lg-5 text-black">
+                                    <h:form>
+                                        <div class="d-flex align-items-center mb-3 pb-1">
+                                            <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                                            <span class="h1 fw-bold mb-0">Logo</span>
+                                        </div>
+                                        <h:messages class="alert alert-danger" role="alert" globalOnly="true" />
+                                        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">#{msg['loginForm.username']}</h5>
+                                        <!-- Correo electronico -->
+                                        <div class="form-outline mb-4">
+                                            <div class="ui-inputgroup">
+                                                <div class="ui-inputgroup-addon"><i class="pi pi-user"/></div>
+                                                <p:inputText type="text" placeholder="#{msg['loginForm.email']}" id="name" class="form-control" value="#{loginBean.usuario.correo}" required="true"/>
+                                            </div>
+                                        </div>
+                                        <!-- Contraseña -->
+                                        <div class="form-outline mb-4">
+                                            <div class="ui-inputgroup">
+                                                <div class="ui-inputgroup-addon"><i class="pi pi-lock"/></div>
+                                                <p:password id="toggle" type="password" class="form-control" name="password" value="#{loginBean.usuario.password}"
+                                                            toggleMask="true" redisplay="true" required="true" placeholder="#{msg['loginForm.pass']}"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="pt-1 mb-4">
+                                            <h:commandButton class="btn btn-dark btn-lg btn-block" action="#{loginBean.validate()}" value="#{msg['loginForm.login']}"/>
+                                            <!-- <button class="btn btn-dark btn-lg btn-block" type="submit">#{msg['loginForm.login']}</button> -->
+                                        </div>
+                                        <a href="https://www.gov.co/terminos-y-condiciones" class="small text-muted">#{msg['loginForm.terms']}</a>
+                                        <a href="https://www.mintic.gov.co/portal/inicio/Secciones-auxiliares/Politicas/2627:Politicas-de-Privacidad-y-Condiciones-de-Uso" class="small text-muted">#{msg['loginForm.policy']}</a>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</ui:composition>

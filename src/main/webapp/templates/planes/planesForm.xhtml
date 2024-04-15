@@ -1,0 +1,232 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="../template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <section role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color: #f5f5f5">
+            <div class="container-fluid" style="margin-top: 15px">
+                <br/><h1 class="text-center"><strong>Formulario planes turísticos</strong></h1><br/>
+                <div class="row justify-content-center">
+                    <div class="col-6">
+                        <h:form>
+                            <div class="row justify-content-center mb-4">
+                                <!-- Título input -->
+                                <div class="col">
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="material-icons">title</i></div>
+                                        <p:inputText type="text" placeholder="Título" id="name" class="form-control" value="#{planesSave.planes.titulo}" maxlength="25"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Descripción input -->
+                            <div class="form-outline mb-6">
+                                <div class="card">
+                                    <h5>Descripción del plan</h5>
+                                    <p:inputTextarea rows="5" cols="30" counter="display" maxlength="150" value="#{planesSave.planes.desc}"
+                                                     counterTemplate="{0} characters remaining." autoResize="false" />
+                                    <h:outputText id="display" class="block" />
+                                </div>
+                            </div><br/>
+
+                            <div class="row justify-content-center mb-4">
+                                <!-- Departamento select -->
+                                <div class="col">
+                                    <div class="col-8">
+                                        <h:outputLabel value="Departamento:" for="departamento"/>
+                                        <h:selectOneMenu id="departamento" value="#{planesSave.idDept}" required="true" class="form-select">
+                                            <f:selectItems value="#{planesSave.deptList}" var="dept"
+                                                           itemLabel="#{dept.departamento}" itemValue="#{dept.id}"/>
+                                            <f:ajax listener="#{planesSave.cargarCiudad()}" render="ciudad"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <!-- Ciudad select -->
+                                <div class="col">
+                                    <div class="col-8">
+                                        <h:outputLabel value="Ciudad:" for="ciudad"/><br/>
+                                        <h:selectOneMenu id="ciudad" value="#{planesSave.idCiud}" class="form-select">
+                                            <f:selectItems value="#{planesSave.ciudadList}" var="ciudad" itemLabel="#{ciudad.ciudad}"
+                                                           itemValue="#{ciudad.idCiud}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <!-- Días input -->
+                                <div class="col">
+                                    <div class="col-8">
+                                        <p:outputLabel for="dias" value="Cantidad de días:"/>
+                                        <p:inputNumber id="dias" value="#{planesSave.planes.cantDias}" minValue="1" decimalPlaces="0" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center mb-4">
+                                <!-- Cantidad personas input -->
+                                <div class="col">
+                                    <div class="col-8">
+                                        <p:outputLabel for="per" value="Cantidad de personas:"/>
+                                        <p:inputNumber id="per" value="#{planesSave.planes.cantPer}" minValue="1" decimalPlaces="0" />
+                                    </div>
+                                </div>
+                                <!-- Alimen select -->
+                                <div class="col">
+                                    <div class="col-8">
+                                        <h:outputLabel value="Alimentación:" for="alim"/>
+                                        <h:selectOneMenu id="alim" value="#{planesSave.planes.alimentacion}" required="true" class="form-select">
+                                            <f:selectItem itemLabel="seleccione uno" itemValue="" noSelectionOption="true"/>
+                                            <f:selectItem itemLabel="Sin alimentación" itemValue="No                       "/>
+                                            <f:selectItem itemLabel="Solo desayuno" itemValue="Solo Desayuno            "/>
+                                            <f:selectItem itemLabel="Solo almuerzo" itemValue="Solo Almuerzo            "/>
+                                            <f:selectItem itemLabel="Almuerzo y desayuno" itemValue="Almuerzo y Desayuno      "/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Costo alimen input -->
+                            <div class="row justify-content-center mb-4">
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon">$</div>
+                                    <p:inputText placeholder="Costo de la alimentación" value="#{planesSave.planes.costoAlim}"/>
+                                    <div class="ui-inputgroup-addon">.00</div>
+                                </div>
+                            </div>
+
+                            <!-- Tarifa 1 input -->
+                            <div class="row justify-content-center mb-4">
+                                <div class="ui-inputgroup">
+                                    <h:outputLabel value="Temporada:" for="alta" />
+                                    <p:inputText value="#{planesSave.tarifa.alta}" id="alta" disabled="true" />
+                                </div>
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon">$</div>
+                                    <p:inputText placeholder="Costo del plan" value="#{planesSave.tarifa.costo}"/>
+                                    <div class="ui-inputgroup-addon">.00</div>
+                                </div>
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-calendar"/></div>
+                                    <p:datePicker placeholder="Fecha de inicio" id="altaDate" value="#{planesSave.tarifa.fecIni}" class="form-control" monthNavigator="true"
+                                                  yearNavigator="true" showWeek="true" disabledDays="#{calendarView.invalidDays}" disabledDates="#{calendarView.invalidDates}"
+                                                  readonlyInput="true" locale="es" pattern="yyyy-MMM-dd"/>
+                                </div>
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-calendar"/></div>
+                                    <p:datePicker placeholder="Fecha final" id="altaFdate" value="#{planesSave.tarifa.fecFin}" class="form-control" monthNavigator="true"
+                                                  yearNavigator="true" showWeek="true" disabledDays="#{calendarView.invalidDays}" disabledDates="#{calendarView.invalidDates}"
+                                                  readonlyInput="true" locale="es" pattern="yyyy-MMM-dd"/>
+                                </div>
+                            </div>
+
+                            <!-- Tarifa 2 input -->
+                            <div class="row justify-content-center mb-4">
+                                <div class="ui-inputgroup">
+                                    <h:outputLabel value="Temporada:" for="media"/>
+                                    <p:inputText value="#{planesSave.tarifa.media}" id="media" disabled="true"/>
+                                </div>
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon">$</div>
+                                    <p:inputText placeholder="Costo del plan" value="#{planesSave.tarifa3.costo}"/>
+                                    <div class="ui-inputgroup-addon">.00</div>
+                                </div>
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-calendar"/></div>
+                                    <p:datePicker placeholder="Fecha de inicio" id="mediaDate" value="#{planesSave.tarifa3.fecIni}" class="form-control" monthNavigator="true"
+                                                  yearNavigator="true" showWeek="true" disabledDays="#{calendarView.invalidDays}" disabledDates="#{calendarView.invalidDates}"
+                                                  readonlyInput="true" locale="es" pattern="yyyy-MMM-dd"/>
+                                </div>
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-calendar"/></div>
+                                    <p:datePicker placeholder="Fecha final" id="mediaFdate" value="#{planesSave.tarifa3.fecFin}" class="form-control" monthNavigator="true"
+                                                  yearNavigator="true" showWeek="true" disabledDays="#{calendarView.invalidDays}" disabledDates="#{calendarView.invalidDates}"
+                                                  readonlyInput="true" locale="es" pattern="yyyy-MMM-dd"/>
+                                </div>
+                            </div>
+
+                            <!-- Tarifa 3 input -->
+                            <div class="row justify-content-center mb-4">
+                                <div class="ui-inputgroup">
+                                    <h:outputLabel value="Temporada:" for="baja" />
+                                    <p:inputText value="#{planesSave.tarifa.baja}" id="baja" disabled="true" />
+                                </div>
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon">$</div>
+                                    <p:inputText placeholder="Costo del plan" value="#{planesSave.tarifa4.costo}" />
+                                    <div class="ui-inputgroup-addon">.00</div>
+                                </div>
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-calendar"/></div>
+                                    <p:datePicker placeholder="Fecha de inicio" id="bajaDate" value="#{planesSave.tarifa4.fecIni}" class="form-control" monthNavigator="true"
+                                                  yearNavigator="true" showWeek="true" disabledDays="#{calendarView.invalidDays}" disabledDates="#{calendarView.invalidDates}"
+                                                  readonlyInput="true" locale="es" pattern="yyyy-MMM-dd"/>
+                                </div>
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-calendar"/></div>
+                                    <p:datePicker placeholder="Fecha final" id="bajaFdate" value="#{planesSave.tarifa4.fecFin}" class="form-control" monthNavigator="true"
+                                                  yearNavigator="true" showWeek="true" disabledDays="#{calendarView.invalidDays}" disabledDates="#{calendarView.invalidDates}"
+                                                  readonlyInput="true" locale="es" pattern="yyyy-MMM-dd"/>
+                                </div>
+                            </div>
+
+                            <!-- Url input -->
+                            <div class="row justify-content-center mb-4">
+                                <div class="col">
+                                    <div class="ui-inputgroup">
+                                        <br/>
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-link"/></div>
+                                        <p:inputText type="url" placeholder="Url de la imagen" class="form-control" value="#{planesSave.planes.url}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <div class="ui-inputgroup">
+                                    <p:selectBooleanButton styleClass="control" id="estado" name="estado" onLabel="Actico" offLabel="Inactivo" value="#{planesSave.planes.estado}"
+                                                           onIcon="pi pi-check" offIcon="pi pi-times" style="width:6rem" />
+                                </div>
+                            </div>
+
+                            <!-- Submit button -->
+                            <div class="form-outline mb-4">
+                                <h:commandButton class="mb-4 ui-button-raised" action="#{planesSave.guardarPlan()}" rendered="#{empty planesSave.planes.fec_crea}" value="Guardar" icon="pi pi-save"/>
+                                <h:commandButton class="mb-4 ui-button-raised" action="#{planesSave.editPlan()}" rendered="#{not empty planesSave.planes.fec_crea}" value="Editar" icon="pi pi-save"/>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Sólo hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                millisecondText: 'Milisegundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText: 'Todo el día',
+                today: 'Hoy',
+                clear: 'Limpiar'
+            };
+        </script>
+    </ui:define>
+</ui:composition>

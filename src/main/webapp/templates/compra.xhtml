@@ -1,0 +1,75 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+                template="template.xhtml">
+    <ui:define name="content">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-md-4" style="background-color: #f5f5f5; height: inherit ">
+            <h:form>
+                <!-- Page Content-->
+                <div class="container px-4 px-lg-5">
+                    <!-- Heading Row-->
+                    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+                        <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0" src="#{compraBean.plan.url.trim()}" alt="Plan Img" /></div>
+                        <div class="col-lg-5">
+                            <h1 class="font-weight-light">#{compraBean.plan.titulo}</h1>
+                            <p>#{compraBean.plan.desc.trim()}</p>
+                            <h:outputLabel value="Cedula cliente:" for="cedClient"/>
+                            <h:selectOneMenu id="cedClient" value="#{compraBean.cliente}" required="true" class="form-select">
+                                <f:selectItems value="#{clientBean.clientes}" var="clientes"
+                                               itemLabel="#{clientes.cedula}" itemValue="#{clientes.cedula}"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <!-- Content Row-->
+                    <div class="row gx-4 gx-lg-5">
+                        <div class="col-md-4 mb-5">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h2 class="card-title">Temporada Alta</h2>
+                                    <p class="card-text">Precio: $ #{planesSave.getTarifa2(compraBean.plan.id, "Alta").costo}<br/>
+                                        Otros gastos: $ #{planesSave.getTarifa2(compraBean.plan.id, "Alta").costoAlim}<br/>
+                                        Fecha de inicio: #{planesSave.getTarifa2(compraBean.plan.id, "Alta").fecIni}<br/>
+                                        Fecha de finalización: #{planesSave.getTarifa2(compraBean.plan.id, "Alta").fecFin}
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <p:commandButton class="btn btn-primary btn-sm" action="#{compraBean.añadirCarrito(planesSave.getTarifa2(compraBean.plan.id, 'Alta'))}" value="Agregar al carrito" disabled="#{empty planesSave.getTarifa2(compraBean.plan.id, 'Alta')}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-5">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h2 class="card-title">Temporada Media</h2>
+                                    <p class="card-text">Precio: $ #{planesSave.getTarifa2(compraBean.plan.id, "Media").costo}<br/>
+                                        Otros gastos: $ #{planesSave.getTarifa2(compraBean.plan.id, "Media").costoAlim}<br/>
+                                        Fecha de inicio: #{planesSave.getTarifa2(compraBean.plan.id, "Media").fecIni}<br/>
+                                        Fecha de finalización: #{planesSave.getTarifa2(compraBean.plan.id, "Media").fecFin}
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <p:commandButton class="btn btn-primary btn-sm" action="#{compraBean.añadirCarrito(planesSave.getTarifa2(compraBean.plan.id, 'Media'))}" value="Agregar al carrito" disabled="#{empty planesSave.getTarifa2(compraBean.plan.id, 'Media')}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-5">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h2 class="card-title">Temporada Baja</h2>
+                                    <p class="card-text">Precio: $ #{planesSave.getTarifa2(compraBean.plan.id, "Baja").costo}<br/>
+                                        Otros gastos: $ #{planesSave.getTarifa2(compraBean.plan.id, "Baja").costoAlim}<br/>
+                                        Fecha de inicio: #{planesSave.getTarifa2(compraBean.plan.id, "Baja").fecIni}<br/>
+                                        Fecha de finalización: #{planesSave.getTarifa2(compraBean.plan.id, "Baja").fecFin}
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <p:commandButton class="btn btn-primary btn-sm" action="#{compraBean.añadirCarrito(planesSave.getTarifa2(compraBean.plan.id, 'Baja'))}" value="Agregar al carrito" disabled="#{empty planesSave.getTarifa2(compraBean.plan.id, 'Baja')}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </main>
+    </ui:define>
+</ui:composition>

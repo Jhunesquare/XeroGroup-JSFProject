@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html">
+    <!-- Navbar -->
+    <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white">
+        <!-- Container wrapper -->
+        <div class="container-fluid">
+
+            <!-- Brand -->
+            <a class="navbar-brand" href="#">
+                <img src="../resources/imagenes/img3.png" height="25" alt="Logo" />
+            </a>
+            <!-- Right elements -->
+            <div class="d-flex align-items-center">
+                <h:form>
+                    <!-- Shop button -->
+                    <p:commandButton styleClass="rounded-button ui-button-outlined" action="#{compraBean.carritoPage('/templates/carrito.xhtml')}" icon="pi pi-shopping-cart" style="margin-right: 3px" rendered="#{!loginBean.rol}"/>
+                </h:form>
+                <!-- Logout button -->
+                <p:commandButton styleClass="rounded-button ui-button-danger ui-button-outlined" action="#{loginBean.logout('/index.xhtml')}" icon="pi pi-sign-out"/>
+            </div>
+            <!-- Right elements -->
+        </div>
+        <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+</ui:composition>

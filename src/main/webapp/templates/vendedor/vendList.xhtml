@@ -1,0 +1,97 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="../template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color: #f5f5f5">
+            <div class="container-fluid" style="margin-top: 15px">
+                <h1 class="text-center"><strong>Listado de vendedores</strong></h1><br/>
+                <h:form>
+                    <p:commandButton class="mb-4 ui-button-raised" style="width: 100px;" action="#{saveBean.newVend()}" value="Nuevo"/>
+                    <table class="table table-sm table-hover table-bordered" id="tablaVend">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th scope="col">Cedula</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Fecha de nacimiento</th>
+                            <th scope="col">Telefono de contacto 1</th>
+                            <th scope="col">Telefono de contacto 2</th>
+                            <th scope="col">Fecha de modificación</th>
+                            <th scope="col">Fecha de creación</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Cantidad Clientes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="#{userBean.users}" var="usuario">
+                            <tr>
+                                <td>
+<!--                                    Boton editar-->
+                                    <p:commandButton action="#{saveBean.editForm(usuario)}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-raised"
+                                                     icon="fas fa-pencil-alt me-2"/>
+<!--                                    Boton borrar-->
+                                    <p:commandButton action="#{saveBean.deleUser(usuario.cedula)}" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-danger"
+                                                     rendered="#{usuario.cantClientes == 0}" icon="fas fa-trash-alt me-2"/>
+                                </td>
+                                <td>#{usuario.cedula}</td>
+                                <td>#{usuario.nombre}</td>
+                                <td>#{usuario.correo}</td>
+                                <td>#{usuario.fec_nac}</td>
+                                <td>#{usuario.tel1}</td>
+                                <td>#{usuario.tel2}</td>
+                                <td>#{usuario.fec_modi}</td>
+                                <td>#{usuario.fec_crea}</td>
+                                <td>#{usuario.estado}</td>
+                                <td>#{usuario.cantClientes}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </h:form>
+            </div>
+        </main>
+        <!-- JQUERY -->
+        <script src="https://code.jquery.com/jquery-3.4.1.js"
+                integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous">
+        </script>
+        <!-- DATATABLES -->
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js">
+        </script>
+        <!-- BOOTSTRAP -->
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js">
+        </script>
+        <script>
+            $(document).ready(function () {
+                $('#tablaVend').DataTable({
+                    language: {
+                        processing: "Tratamiento en curso...",
+                        search: "Buscar:",
+                        lengthMenu: "Agrupar de _MENU_",
+                        info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
+                        infoEmpty: "No existen datos.",
+                        infoFiltered: "(filtrado de _MAX_ elementos en total)",
+                        infoPostFix: "",
+                        loadingRecords: "Cargando...",
+                        zeroRecords: "No se encontraron datos con tu busqueda",
+                        emptyTable: "No hay datos disponibles en la tabla.",
+                        paginate: {
+                            first: "Primero",
+                            previous: "Anterior",
+                            next: "Siguiente",
+                            last: "Ultimo"
+                        },
+                        aria: {
+                            sortAscending: ": active para ordenar la columna en orden ascendente",
+                            sortDescending: ": active para ordenar la columna en orden descendente"
+                        }
+                    },
+                });
+            });
+        </script>
+    </ui:define>
+</ui:composition>

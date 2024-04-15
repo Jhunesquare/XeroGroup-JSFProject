@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+        <div class="position-sticky">
+            <div class="list-group list-group-flush mx-3 mt-4">
+                <h:form>
+                    <!-- Boton vendedores -->
+                    <div style="margin-bottom: 15px">
+                        <p:commandButton action="#{userList.userList('/templates/vendedor/vendList.xhtml?faces-redirect=true')}" icon="fas fa-users fa-fw me-3"
+                                         id="sellers" value="Vendedores" disableOnAjax="false" class="list-group-item-action ui-button-outlined" rendered="#{loginBean.rol}"/>
+                    </div>
+                    <!-- Boton clientes -->
+                    <div style="margin-bottom: 15px">
+                        <p:commandButton action="#{clientList.clientList('/templates/cliente/clientList.xhtml?faces-redirect=true')}" icon="fas fa-star fa-fw me-3"
+                                         id="clients" value="Clientes" disableOnAjax="false" class="list-group-item-action ui-button-outlined" rendered="#{!loginBean.rol}"/>
+                    </div>
+
+                    <!-- Boton planes -->
+                    <div style="margin-bottom: 15px">
+                        <p:commandButton action="#{planesCards.planesCards('/templates/planes/planesCards.xhtml?faces-redirect=true')}" icon="fas fa-plane-departure fa-fw me-3"
+                                         id="plans" value="Planes" disableOnAjax="false" class="list-group-item-action ui-button-outlined"/>
+                    </div>
+
+                    <!-- Boton estadisticas -->
+                    <div style="margin-bottom: 15px">
+                        <p:commandButton action="/templates/graphs.xhtml?faces-redirect=true" icon="pi pi-chart-line"
+                                         id="charts" value="Estadisticas" disableOnAjax="false" class="list-group-item-action ui-button-outlined" rendered="#{loginBean.rol}"/>
+                    </div>
+                </h:form>
+
+            </div>
+        </div>
+    </nav>
+</ui:composition>

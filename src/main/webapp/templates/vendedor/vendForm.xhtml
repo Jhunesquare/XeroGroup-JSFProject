@@ -1,0 +1,137 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="../template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <section role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color: #f5f5f5">
+            <div class="container-fluid" style="margin-top: 15px">
+                <br/><h1 class="text-center"><strong>Formulario vendedor</strong></h1><br/>
+                <div class="row justify-content-center">
+                    <div class="col-6">
+                        <h:form>
+                            <p:growl id="growl" showDetail="true" />
+                            <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+                            <div class="row justify-content-center mb-4">
+                                <div class="col">
+                                    <!-- Id input -->
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-id-card"/></div>
+                                        <p:inputText type="text" placeholder="Cedula" id="id" class="form-control" maxlength="10" value="#{saveBean.vendedor.cedula}" disabled="#{not empty saveBean.vendedor.fec_crea}" required="true"/>
+                                        <p:message for="id" display="icon"/>
+                                    </div>
+                                </div>
+                                <!-- Name input -->
+                                <div class="col">
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-user"/></div>
+                                        <p:inputText type="text" placeholder="Nombre" id="name" class="form-control" value="#{saveBean.vendedor.nombre}" required="true"/>
+                                        <p:message for="name" display="icon"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-user"/></div>
+                                    <p:inputText type="email" id="correo" placeholder="Correo electrónico" class="form-control" value="#{saveBean.vendedor.correo}" required="true"/>
+                                    <p:message for="correo" display="icon"/>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <!-- Tel1 input -->
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-phone"/></div>
+                                        <p:inputText placeholder="Teléfono 1" type="text" id="tel1" class="form-control" maxlength="10" value="#{saveBean.vendedor.tel1}"/>
+                                    </div>
+                                </div>
+                                <!-- Tel2 input -->
+                                <div class="col">
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-phone"/></div>
+                                        <p:inputText placeholder="Teléfono 2" type="text" id="tel2" class="form-control" maxlength="10" value="#{saveBean.vendedor.tel2}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fecha nac -->
+                            <div class="mb-4">
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-calendar"/></div>
+                                    <p:datePicker placeholder="Fecha de nacimiento" id="birthdate" value="#{saveBean.vendedor.fec_nac}" class="form-control" monthNavigator="true"
+                                                  yearNavigator="true" showWeek="true" disabledDays="#{calendarView.invalidDays}" disabledDates="#{calendarView.invalidDates}"
+                                                  readonlyInput="true" locale="es" pattern="yyyy-MMM-dd" required="true"/>
+                                    <p:message for="birthdate" display="icon"/>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <!-- Password input -->
+                                <div class="col">
+                                    <div class="form-outline mb-4">
+                                        <div class="ui-inputgroup">
+                                            <div class="ui-inputgroup-addon"><i class="pi pi-lock"/></div>
+                                            <p:password id="toggle" type="password" class="form-control" name="password" value="#{saveBean.vendedor.password}"
+                                                        toggleMask="true" redisplay="true" required="true" placeholder="Contraseña"/>
+                                            <p:message for="toggle" display="icon"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-outline mb-4">
+                                        <div class="ui-inputgroup">
+                                            <p:selectBooleanButton styleClass="control" id="estado" name="estado" onLabel="Actico" offLabel="Inactivo" rendered="#{not empty saveBean.vendedor.fec_crea}" value="#{saveBean.vendedor.estado}"
+                                                                   onIcon="pi pi-check" offIcon="pi pi-times" style="width:6rem" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Submit button -->
+                            <div class="form-outline mb-4">
+                                <p:commandButton class="mb-4 ui-button-raised" update="growl" action="#{saveBean.saveUser()}" rendered="#{empty saveBean.vendedor.fec_crea}" value="Guardar" icon="pi pi-save"/>
+                                <p:commandButton class="mb-4 ui-button-raised" action="#{saveBean.editUser()}" rendered="#{not empty saveBean.vendedor.fec_crea}" value="Editar" icon="pi pi-save"/>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Sólo hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                millisecondText: 'Milisegundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText: 'Todo el día',
+                today: 'Hoy',
+                clear: 'Limpiar'
+            };
+        </script>
+    </ui:define>
+</ui:composition>

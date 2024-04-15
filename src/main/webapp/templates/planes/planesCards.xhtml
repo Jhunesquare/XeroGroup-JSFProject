@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define  name="content">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color: #f5f5f5">
+            <h:form>
+                <p:commandButton class="mb-4 ui-button-raised" style="width: 100px;" action="#{planesSave.saveFrom()}" value="Nuevo" rendered="#{loginBean.rol}"/>
+            </h:form>
+            <div class="card">
+                <p:carousel value="#{planesBean.planes}" var="planes" circular="true" autoplayInterval="3000"
+                            responsiveOptions="#{planesBean.responsiveOptions}" numVisible="3" numScroll="1">
+                    <f:facet name="header">
+                        <h3 style="text-align: center">Planes turísticos</h3>
+                    </f:facet>
+
+                    <div class="product-item text-center" style="box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); border: 1px solid var(--surface-d); border-radius: 3px; margin: .3rem;">
+                        <div class="product-item-content text-center" style="border: 1px solid var(--surface-d); border-radius: 3px; margin: .3rem; padding: 2rem 0; justify-content: center">
+                            <div class="mb-3">
+                                <p:graphicImage styleClass="product-image" style="width: 50%; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);"
+                                                url="#{planes.url.trim()}"/>
+                            </div>
+                            <div>
+                                <h4 class="mb-1">#{planes.titulo}</h4>
+                                <h6 class="mt-0 mb-3">
+                                    <h:outputText value="Dias: #{planes.cantDias}"/>
+                                </h6>
+                                <span class="product-badge">#{planesBean.getEstado(planes.estado)}</span>
+                                <h:form>
+                                    <div class="mt-5">
+                                        <!-- Boton consultar -->
+                                        <p:commandButton action="#{compraBean.compraView('/templates/compra.xhtml?faces-redirect=true', planes)}" icon="pi pi-search" styleClass="rounded-button mr-2" disabled="#{!planes.estado}" rendered="#{!loginBean.rol}"/>
+                                        <!-- Boton editar -->
+                                        <p:commandButton action="#{planesSave.editForm(planes)}" icon="pi pi-cog" styleClass="ui-button-help rounded-button" rendered="#{loginBean.rol}"/>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </p:carousel>
+            </div>
+        </main>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,145 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="../template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <section role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color: #f5f5f5">
+            <div class="container-fluid" style="margin-top: 15px">
+                <br/><h1 class="text-center"><strong>Formulario cliente</strong></h1><br/>
+                <div class="row justify-content-center">
+                    <div class="col-6">
+                        <h:form>
+                            <p:growl id="growl" showDetail="true" />
+                            <p:growl id="growl-sticky" for="sticky-key" showDetail="true" sticky="true" />
+                            <div class="row justify-content-center mb-4">
+                                <h5>Vendedor</h5><br/>
+                                <div class="col">
+                                    <!-- Vendedor Id input -->
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-id-card"/></div>
+                                        <p:inputText type="text" placeholder="Vendedor Cedula" class="form-control" maxlength="10" value="#{loginBean.vendedor.cedula}" disabled="true"/>
+                                    </div>
+                                </div>
+                                <!-- Vendedor Name input -->
+                                <div class="col">
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-user"/></div>
+                                        <p:inputText type="text" placeholder="Vendedor Nombre" class="form-control" value="#{loginBean.vendedor.nombre}" disabled="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5>Cliente</h5>
+                            <div class="row justify-content-center mb-4">
+                                <div class="col">
+                                    <!-- Client Id input -->
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-id-card"/></div>
+                                        <p:inputText type="text" placeholder="Cedula" id="id" class="form-control" maxlength="10" value="#{clientSave.cliente.cedula}" disabled="#{not empty clientSave.cliente.fec_crea}" required="true"/>
+                                    </div>
+                                </div>
+                                <!-- Name input -->
+                                <div class="col">
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-user"/></div>
+                                        <p:inputText type="text" placeholder="Nombre" id="name" class="form-control" value="#{clientSave.cliente.nombre}" required="true"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-user"/></div>
+                                    <p:inputText type="email" placeholder="Correo electrónico" class="form-control" value="#{clientSave.cliente.correo}" required="true"/>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center mb-4">
+                                <!-- Name contacto input -->
+                                <div class="col">
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-user"/></div>
+                                        <p:inputText type="text" placeholder="Nombre de contacto" class="form-control" value="#{clientSave.cliente.nom_cont}" required="true"/>
+                                    </div>
+                                </div>
+                                <!-- Tel contac input -->
+                                <div class="col">
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-phone"/></div>
+                                        <p:inputText placeholder="Teléfono de contacto" type="text" class="form-control" maxlength="10" value="#{clientSave.cliente.tel_perCont}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <!-- Tel1 input -->
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-phone"/></div>
+                                        <p:inputText placeholder="Teléfono 1" type="text" id="tel1" class="form-control" maxlength="10" value="#{clientSave.cliente.tel1}"/>
+                                    </div>
+                                </div>
+                                <!-- Tel2 input -->
+                                <div class="col">
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-phone"/></div>
+                                        <p:inputText placeholder="Teléfono 2" type="text" id="tel2" class="form-control" maxlength="10" value="#{clientSave.cliente.tel2}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fecha nac -->
+                            <div class="mb-4">
+                                <div class="ui-inputgroup">
+                                    <div class="ui-inputgroup-addon"><i class="pi pi-calendar"/></div>
+                                    <p:datePicker placeholder="Fecha de nacimiento" id="birthdate" value="#{clientSave.cliente.fec_nac}" class="form-control" monthNavigator="true"
+                                                  yearNavigator="true" showWeek="true" disabledDays="#{calendarView.invalidDays}" disabledDates="#{calendarView.invalidDates}"
+                                                  readonlyInput="true" locale="es" pattern="yyyy-MMM-dd" required="true"/>
+                                </div>
+                            </div>
+
+                            <!-- Submit button -->
+                            <div class="form-outline mb-4">
+                                <p:commandButton class="mb-4 ui-button-raised" update="growl" action="#{clientSave.saveClient(loginBean.vendedor)}" rendered="#{empty clientSave.cliente.fec_crea}" value="Guardar" icon="pi pi-save"/>
+                                <p:commandButton class="mb-4 ui-button-raised" action="#{clientSave.editClient()}" rendered="#{not empty clientSave.cliente.fec_crea}" value="Editar" icon="pi pi-save"/>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Sólo hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                millisecondText: 'Milisegundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText: 'Todo el día',
+                today: 'Hoy',
+                clear: 'Limpiar'
+            };
+        </script>
+    </ui:define>
+</ui:composition>
