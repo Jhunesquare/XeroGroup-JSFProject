@@ -77,6 +77,7 @@ public class GraphsBean implements Serializable {
 
     }
 
+    //void//
     private void createPieModel() {
         pieModel = new PieChartModel();
         ChartData data = new ChartData();
