@@ -1,6 +1,6 @@
 # Bienvenido 👋
 
-![Welcome](./ruta-a-tu-imagen.png)
+![Welcome](https://concepto.de/wp-content/uploads/2020/08/Programacion-informatica-scaled-e1724960033513.jpg)
 
 [LinkedIn](https://www.linkedin.com/in/victor-hugo-soto-restrepo-7b16752a8/) • [Gmail](mailto:victorhsoto07@gmail.com)
 
